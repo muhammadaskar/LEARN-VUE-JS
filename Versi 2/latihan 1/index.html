@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan 1 Vue JS</title>
+</head>
+
+<style>
+    body{
+        margin: 5%;
+        font-family: 'Courier New', Courier, monospace;
+        
+    }
+
+    header h1{
+        text-align: center;
+    }
+
+    #app img{
+        margin: auto;
+        display: block;
+    }
+
+    .active {
+        background: salmon;
+        border: 0;
+        padding: 5px;
+        color: white;
+    }
+
+    #app a:hover {
+        cursor: pointer;
+    }
+</style>
+<body>
+
+    <header>
+        <h1>What is Vue JS</h1>
+    </header>
+    
+    <div id="app">
+        <img :src="gambar" alt="" width="150">
+        <!-- <p> {{ setName("Askar") }} </p> -->
+        <!-- <p> {{ totalBayar }} </p>
+            <p> {{ namaLengkap }} </p>
+            <p> Bilangan {{ bilangan  +' adalah ' + infoBilangan}} </p> -->
+            <!-- <div v-html="link"></div> -->
+            <!-- <p v-text="name.toUpperCase()"></p> -->
+            <!-- <img :src="gambar" alt="" width="200"> -->
+        
+        <!-- <button v-on:click="handleClick()">Tambah</button>
+        {{ bilangan }}
+        <p> Bilangan {{ bilangan  +' adalah ' + infoBilangan}} </p> -->
+
+        <!-- <p v-bind:class="{ active: isActive }">Ini</p> -->
+
+        <a href="#" v-bind:class="{ active: menu === 'home' }"  v-on:click.prevent="gantiMenu('home')" >Home</a>
+        <a href="#" v-bind:class="{ active: menu === 'about' }"  v-on:click.prevent="gantiMenu('about')" >About</a>
+        <a href="#" v-bind:class="{ active: menu === 'blog' }"  v-on:click.prevent="gantiMenu('blog')" >Blog</a>
+
+        <!-- <div>
+            <label for="">
+                <input type="checkbox" value="React" v-model="kelas">
+                React
+            </label>
+            <label for="">
+                <input type="checkbox" value="Vue" v-model="kelas">
+                Vue
+            </label>
+            <label for="">
+                <input type="checkbox" value="Angular" v-model="kelas">
+                Angular
+            </label>
+        </div>
+        {{ kelas }} -->
+
+        <!-- <ul>
+            <li v-for="(k, index) in kelas"> {{ index+1 }} - {{ k }} </li>
+        </ul> -->
+
+        <!-- <ul>
+            <li v-for="(angka, index) in 5">{{ angka }}</li>
+        </ul> -->
+
+        <!-- <h3>Mencari Bilangan Genap</h3>
+        <template v-if="kelas.length > 1">
+            <ul>
+                <li v-for="item in cariBilanganGenap(numbers)">{{ item }}</li>
+            </ul>
+        </template> -->
+
+        <!-- <button v-on:click="say('hi')">klik</button> -->
+
+        <h3>Form Submit</h3>
+        <p><input type="text" placeholder="Nama Kelas" v-on:keyup.enter="submit" v-model="kelasBaru"></p>
+
+        <ul>
+            <li v-for="(k in kelas"> {{ k }} </li>
+        </ul>
+
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                name: 'Muhammad Askar',
+                pesan: 'Hello World',
+                isActive: true,
+                qty: 3,
+                namaDepan: 'Muhammad',
+                namaBelakang: 'Askar',
+                bilangan: 1,
+                link: '<a href="https://muhammadaskar.github.io">askar</a>',
+                gambar: 'Versi 2/img/logo.png',
+                isActive: false,
+                menu: 'home',
+                kelas: ['Golang', 'PHP'],
+                numbers: [1, 2, 3, 4,5],
+                kelasBaru: "",
+            },
+            methods: {
+                getName: function(){
+                    return 'Hello ' + this.name;
+                },
+                setName: function(name){
+                    this.name = name
+                    return this.getName()
+                },
+                handleClick: function(){
+                    this.bilangan++
+                    this.gambar = 'Versi 2/img/laravel-logo.svg'
+                },
+                cariBilanganGenap: function(numbers){ // arrow function
+                    return numbers.filter(angka => {
+                        return angka % 2 == 0
+                    })
+                },
+                say: (msg) => {
+                    alert(msg)
+                },
+                gantiMenu: function(menu){
+                    this.menu = menu
+                },
+                submit: function(){
+                    this.kelas.unshift(this.kelasBaru)
+                    this.kelasBaru = ""
+                }
+            },
+            computed: {
+                totalBayar: function(){
+                    return this.qty * 10000
+                },
+                namaLengkap: function(){
+                    return this.namaDepan + ' ' + this.namaBelakang
+                },
+                infoBilangan: function(){
+                    return this.bilangan%2 === 0 ? 'Genap' : 'Ganjil'
+                }
+            }
+        })
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELAJAR VUE JS</title>
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+
+    <style>
+        .fade-transition{
+            transition: opacity .5s ease;
+        }
+
+        .fade-enter, .fade-leave{
+            opacity: 0;
+        }
+    </style>
+
+
+
+</head>
+<body>
+
+    <div id="app">
+        <ul>
+            <li>
+                <a href="#" v-on:click="currentView='home'">Home</a>
+                
+            </li>
+            <li>
+                <a href="#" v-on:click="currentView='members'">Member</a>
+            </li>
+        </ul>
+        <component :is="currentView" class="animated" transition="custom-fade" transition-mode="out-in" keep-alive></component>
+    </div>
+
+    <template id="home-template">
+            <h1>Belajar VUE JS</h1>
+    </template>
+
+    <template id="member-template">
+            <ul>
+                <input type="text" v-model="search">
+                <li v-for="member in members | filterBy search" transition="stagger" stagger="100">
+                    {{ member }}
+                </li>
+            </ul>
+    </template>
+
+    <!-- <script src="node_mndodules/vue/dist/vue.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.min.js"></script>
+    <script>
+
+        Vue.transition(
+            'custom-fade',
+            {
+                enterClass: 'pulse',
+                leaveClass: 'fadeOutUp'
+            }
+        )
+
+        Vue.component(
+            'home',
+            {
+                template: '#home-template'
+            }
+        )
+
+        Vue.component(
+            'members',
+            {
+                template: '#member-template',
+                data: function(){
+                    return{
+                        members: [
+                            'askar', 'aswad', 'lidya'
+                        ]
+                    }
+                }
+            }
+        )
+
+        new Vue({
+            el: '#app',
+            data: {
+                currentView: 'home'
+            },
+        });
+    </script>
+</body>
+</html>

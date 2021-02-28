@@ -1,0 +1,16 @@
+body {
+    margin: 5%;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+input {
+    margin-bottom: 5px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.error {
+    color: red;
+}

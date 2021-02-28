@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan 2 Vue JS</title>
+    
+</head>
+<link rel="stylesheet" href="style.css">
+<body>
+
+    
+    
+    <div id="app">
+
+        <header-component nama="VUE JS"></header-component>
+        <nav>
+            <router-link to="/">Home</router-link>
+            <router-link to="/about">About</router-link>
+            <router-link to="/kelas">Kelas</router-link>
+        </nav>
+        <main>
+            <router-view v-bind:items="kelas" :input="kelasBaru" v-on:submitkelas="submitkelas" v-on:hapuskelas="hapusKelas"></router-view>
+        </main>
+        <footer-component>
+            Copyright 2021 Vue JS 2
+        </footer-component>
+
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
+    <script src="firebase.js"></script>
+    <script src="component.js"></script>
+    <script src="router.js"></script>
+    <script>
+
+
+
+        const vm = new Vue({
+            router,
+            components: {
+                'home': Home
+            },
+            data: {
+                name: 'Muhammad Askar',
+                logo: '././Versi 2/img/logo.png',
+                /*kelas: [
+                {id: 1, judul: 'Vue Js', deskripsi: 'Ini Deskripsi VUE JS', gambar: 'logo.png'},
+                {id: 2, judul: 'Laravel', deskripsi: 'Ini Deskripsi Laravel', gambar: 'laravel-logo.svg'},
+                ],*/
+                numbers: [1, 2, 3, 4,5],
+                kelasBaru: "",
+                kelas: []
+            },
+            created(){
+                kelasRef.on('value', this.resultData, this.errorData)
+            },
+            methods: {
+                resultData(items){
+                    this.kelas = []
+                    items.forEach((item) => {
+                        let data = {
+                            id: item.key,
+                            judul: item.val().judul,
+                            deskripsi: item.val().deskripsi,
+                            gambar: item.val().gambar,
+                        }
+                        this.kelas.push(data)
+                    })
+                },
+                errorData(error){
+                    console.log(error)
+                },
+                hapusKelas: function(id){
+                    //this.kelas = this.kelas.filter(item => item.id != id)
+                    //localStorage.setItem('kelas', JSON.stringify(this.kelas))
+                    db.ref('kelas/' +id).remove()
+
+                    Swal.fire(
+                        'Sukses',
+                        'Data berhasil dihapus',
+                        'success'
+                        )
+                },
+                submitkelas: function(data){
+                    // this.kelas.push(data)
+                    this.kelas = []
+                    kelasRef.push({
+                        judul: data.judul,
+                        deskripsi: data.deskripsi,
+                        gambar: data.gambar,
+                    })
+                    localStorage.setItem('kelas', JSON.stringify(this.kelas))
+                    Swal.fire(
+                        'Sukses',
+                        'Data berhasil disimpan',
+                        'success'
+                        )
+                },
+            },
+            computed: {
+            }
+        })
+
+        vm.$mount('#app')
+    </script>
+
+
+</body>
+</html>
